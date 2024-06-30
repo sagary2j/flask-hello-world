@@ -20,6 +20,12 @@ class TestApp(unittest.TestCase):
         response = tester.put('/hello/testuser', json={'dateOfBirth': 'invalid'})
         self.assertEqual(response.status_code, 400)
         self.assertIn('Invalid date format', response.data.decode('utf-8'))
+    
+    def test_save_user_data_future_date(self):
+            with app.test_client() as client:
+                response = client.put('/hello/john', json={'dateOfBirth': '2030-01-01'})
+                self.assertEqual(response.status_code, 400)
+                self.assertEqual(response.json, {'error': 'Date of birth must be in the past.'})
 
     def test_save_user_data_database_error(self):
         tester = app.test_client(self)
