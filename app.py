@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import sqlite3
 from datetime import datetime, timedelta
+import datetime as dt
 
 app = Flask(__name__)
 
@@ -18,13 +19,17 @@ except Exception as e:
 def save_user_data(username):
     data = request.get_json()
     date_of_birth = data["dateOfBirth"]
+    
     if not username.isalpha():
-        return "Username must contain only letters", 400
+        return jsonify({"error": "Username must contain only letters"}), 400
     try:
         datetime.strptime(date_of_birth, "%Y-%m-%d")
     except ValueError:
-        return "Invalid date format", 400
+        return jsonify({"error": "Invalid date format. Use YYYY-MM-DD."}), 400
 
+    if dt.datetime.strptime(date_of_birth, "%Y-%m-%d") >= dt.datetime.today():
+        return jsonify({"error": "Date of birth must be in the past."}), 400
+    
     conn = sqlite3.connect("users.db")
     try:
         cursor = conn.cursor()
