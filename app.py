@@ -2,6 +2,9 @@ from flask import Flask, request, jsonify
 import sqlite3
 from datetime import datetime, timedelta
 import datetime as dt
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 
