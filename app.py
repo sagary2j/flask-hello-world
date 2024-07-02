@@ -30,7 +30,7 @@ def save_user_data(username):
     except ValueError:
         return jsonify({"error": "Invalid date format. Use YYYY-MM-DD."}), 400
 
-    if dt.datetime.strptime(date_of_birth, "%Y-%m-%d") >= dt.datetime.today():
+    if datetime.strptime(date_of_birth, "%Y-%m-%d") >= datetime.today():
         return jsonify({"error": "Date of birth must be in the past."}), 400
     
     conn = sqlite3.connect("users.db")
