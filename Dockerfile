@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8000/tcp
 
 # Specify the command to run on container start
-CMD [ "python", "app.py" ]
+CMD [ "python", "appdb.py" ]
