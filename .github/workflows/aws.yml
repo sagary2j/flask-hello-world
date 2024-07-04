@@ -99,7 +99,9 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: ${{ env.AWS_REGION }} 
-      run: terraform apply -auto-approve
+      run: |
+        cd terraform
+        terraform apply -auto-approve
 
 
     # - name: Fill in the new image ID in the Amazon ECS task definition
