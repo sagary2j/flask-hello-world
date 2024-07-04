@@ -3,6 +3,10 @@ resource "aws_ecs_cluster" "ecs_cluster" {
   name = "flask_cluster"
 }
 
+data "aws_ecr_repository" "ecr" {
+  name = "flask-docker-app"
+}
+
 # Create the ECS service.
 resource "aws_ecs_service" "service" {
   name            = "flask-ecs-service"
@@ -31,7 +35,7 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
     [
       {
         "name" : "flask-container",
-        "image" : "${aws_ecr_repository.ecr.repository_url}:latest",
+        "image" : "${data.aws_ecr_repository.ecr.repository_url}:latest",
         "entryPoint" : []
         "essential" : true,
         "networkMode" : "awsvpc",
