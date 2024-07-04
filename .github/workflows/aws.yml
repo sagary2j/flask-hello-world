@@ -69,7 +69,8 @@ jobs:
 
     - name: Terraform Init
       run: |
-        cd terraform
+        ls -ltrh
+        #cd terraform
         terraform init
     
     - name: Terraform Validate
