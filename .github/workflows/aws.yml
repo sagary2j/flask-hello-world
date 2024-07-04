@@ -18,7 +18,7 @@ env:
   ECS_CLUSTER: MY_ECS_CLUSTER
   # set this to the path to your Amazon ECS task definition file, e.g. .aws/task-definition.json  
   ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION 
-  # set this to the name of the container in the container definitions section of your task definition                                             
+  # set this to the name of the container in the container definitions section of your task definition                                              
   CONTAINER_NAME: MY_CONTAINER_NAME           
 
 permissions:
@@ -49,7 +49,8 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ github.sha }}
+        IMAGE_TAG: latest
+          
       run: |
         # Build a docker container and
         # push it to ECR so that it can
@@ -93,11 +94,12 @@ jobs:
       if: steps.plan.outcome == 'failure'
       run: exit 1
     
-    # - name: Terraform Apply
-    #   env:
-    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    #   run: terraform apply -auto-approve
+    - name: Terraform Apply
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ env.AWS_REGION }} 
+      run: terraform apply -auto-approve
 
 
     # - name: Fill in the new image ID in the Amazon ECS task definition
