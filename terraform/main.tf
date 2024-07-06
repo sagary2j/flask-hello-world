@@ -236,9 +236,9 @@ resource "aws_security_group" "ecs_sg" {
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    protocol    = "-1"
-    from_port   = 0
-    to_port     = 0
+    protocol    = "tcp"
+    from_port   = 8000
+    to_port     = 8000
     cidr_blocks = ["0.0.0.0/0"]
   }
 
