@@ -13,11 +13,6 @@ resource "aws_dynamodb_table" "user_table" {
     type = "S"
   }
 
-  ttl {
-    attribute_name = "TimeToExist"
-    enabled        = false
-  }
-
   # Define the Global Secondary Index
   global_secondary_index {
     name            = "date_of_birth_index"
