@@ -25,9 +25,9 @@ terraform {
 resource "aws_s3_bucket" "tfbucket" {
   bucket = "terrforms3-remote-backend"
 
-  lifecycle {
-    prevent_destroy = true
-  }
+  # lifecycle {
+  #   prevent_destroy = true
+  # }
   tags = {
     Name = "S3 Remote Terraform State Store"
   }

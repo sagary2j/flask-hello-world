@@ -1,6 +1,8 @@
 # Set base image (host OS)
 FROM python:3.12-alpine
 
+ENV AWS_DEFAULT_REGION=us-east-1
+
 WORKDIR /app
 
 # Copy the dependencies file to the working directory
